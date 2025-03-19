@@ -1,70 +1,132 @@
-# eVoteLedger
+# eVoteLedger: Blockchain-Based Voting System
 
-***************************************
-* # UNDER DEVELOPMENT
-***************************************
 ## Overview
-eVoteLedger is a secure, transparent, and decentralized voting system built on blockchain technology. This project aims to deliver a tamper-proof, user-friendly platform for conducting elections, ensuring fairness, transparency, and security for all participants.
+**eVoteLedger** is a decentralized and secure blockchain-based voting system designed to ensure **transparency, integrity, and accessibility** in elections. Built using **Next.js** for the frontend and **Node.js/Express.js** for the backend, it leverages **Ethereum smart contracts** to store votes immutably, preventing fraud and ensuring verifiable elections.
 
 ## Features
-- **Decentralized** ledger for recording votes
-- **Immutable** voting records, ensuring data integrity
-- **Transparent** and verifiable vote counting
-- **Secure** user verification and authentication
-- **React-based frontend** for an intuitive user interface
+✅ **Decentralized & Secure** – Blockchain-based voting eliminates tampering and fraud.  
+✅ **Web3 Authentication** – Voters sign in using MetaMask or WalletConnect.  
+✅ **Transparent Elections** – Results are verifiable and immutable on the blockchain.  
+✅ **Responsive UI** – Built with **Next.js & Tailwind CSS**, ensuring mobile-friendliness.  
+✅ **Role-Based Access** – Voters, administrators, and election organizers have distinct dashboards.  
+✅ **Real-Time Updates** – Uses WebSockets to display live election progress.  
+✅ **Dark Mode Support** – Modern UI with accessibility in mind.  
 
 ## Tech Stack
-- **Blockchain**: Smart contracts for vote management
-- **Frontend**: React, with Web3.js or Ethers.js for blockchain interaction
-- **Backend (Optional)**: Node.js for additional API endpoints or user data
-- **Database (Optional)**: IPFS or any decentralized storage for records, if needed
+### **Frontend (Next.js)**
+- React.js & Next.js (Server-side rendering & API routes)
+- Tailwind CSS (Fully responsive UI)
+- Ethers.js (Blockchain interaction)
+- NextAuth.js (Authentication)
+- Recharts (Election result visualization)
 
-## Getting Started
-### Prerequisites
-- [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/)
-- [MetaMask](https://metamask.io/) or other compatible wallets for blockchain access
+### **Backend (Node.js & Express.js)**
+- Express.js (RESTful API)
+- MongoDB (User & election metadata storage)
+- Ethers.js (Smart contract interaction)
+- JWT (Secure authentication)
+- WebSockets (Real-time updates)
 
-### Installation
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/eVoteLedger.git
-   cd eVoteLedger
-   ```
+### **Blockchain & Smart Contracts**
+- Solidity (Ethereum smart contracts)
+- Hardhat (Smart contract development & testing)
+- MetaMask (Web3 authentication)
+- IPFS (Decentralized storage for election metadata)
 
-2. **Install dependencies for the frontend**
-   ```bash
-   cd frontend
-   npm install
-   ```
+## Installation & Setup
+### **Prerequisites**
+Ensure you have installed:
+- Node.js (>=18.x.x)
+- MongoDB (local or MongoDB Atlas)
+- MetaMask extension
+- Hardhat (for smart contract deployment)
 
-3. **Smart Contract Deployment** (assuming Solidity and Truffle or Hardhat)
-   - Set up a local blockchain or connect to a testnet.
-   - Deploy the smart contracts and note the deployed addresses for frontend configuration.
-
-4. **Configure Frontend**
-   - Update blockchain contract addresses and any necessary API endpoints in the frontend configuration files.
-
-5. **Run the frontend**
-   ```bash
-   npm start
-   ```
-
-## Project Structure
-
-
-## Usage
-- Access the React app, connect a MetaMask wallet, and follow the instructions to cast a vote.
-- Votes will be securely recorded on the blockchain, and results can be verified on-chain.
-
-## Contributing
-1. Fork the project.
-2. Create your feature branch: `git checkout -b feature/YourFeature`.
-3. Commit your changes: `git commit -m 'Add some feature'`.
-4. Push to the branch: `git push origin feature/YourFeature`.
-5. Open a pull request.
-
-## License
-This project is licensed under the MIT License – see the LICENSE file for details.
+### **1. Clone the Repository**
+```bash
+git clone https://github.com/your-repo/eVoteLedger.git
+cd eVoteLedger
 ```
 
-This structure should help get your eVoteLedger project set up! Let me know if you'd like more details on any section.
+### **2. Backend Setup**
+```bash
+cd backend
+npm install
+cp .env.example .env # Configure environment variables
+npm run dev # Start backend server
+```
+
+### **3. Frontend Setup**
+```bash
+cd frontend
+npm install
+cp .env.example .env # Configure environment variables
+npm run dev # Start frontend server
+```
+
+### **4. Deploy Smart Contracts**
+```bash
+cd blockchain
+npx hardhat compile
+npx hardhat run scripts/deploy.js --network sepolia # Deploy to Ethereum testnet
+```
+
+## Usage
+### **User Roles & Features**
+- **Voters**: Register, view elections, and cast votes securely.
+- **Admins**: Create/manage elections, verify voter eligibility, and publish results.
+- **Public**: View finalized election results on a blockchain explorer.
+
+### **Casting a Vote**
+1. Connect your Web3 wallet (MetaMask).
+2. Select an active election and view candidate details.
+3. Cast your vote by signing a blockchain transaction.
+4. Verify your vote on the blockchain.
+
+### **Viewing Results**
+- Real-time vote counts are displayed with charts.
+- Results are published on-chain for transparency.
+- Admins can export data for official records.
+
+## Smart Contract Overview
+```solidity
+pragma solidity ^0.8.0;
+contract Voting {
+    struct Candidate {
+        string name;
+        uint voteCount;
+    }
+    mapping(uint => Candidate) public candidates;
+    mapping(address => bool) public hasVoted;
+
+    function vote(uint candidateId) public {
+        require(!hasVoted[msg.sender], "Already voted");
+        candidates[candidateId].voteCount++;
+        hasVoted[msg.sender] = true;
+    }
+}
+```
+
+## Deployment
+Deploy on **Vercel** (Frontend) & **Render/Heroku** (Backend):
+```bash
+# Deploy frontend to Vercel
+vercel
+
+# Deploy backend to Heroku
+heroku create evoteledger-api
+git push heroku main
+```
+
+## Future Enhancements
+- ✅ **Zero-Knowledge Proofs (ZK-SNARKs)** for anonymous voting
+- ✅ **Multi-chain support** for greater decentralization
+- ✅ **Mobile app version** for increased accessibility
+- ✅ **AI-powered voter verification** to prevent identity fraud
+
+## License
+This project is licensed under the **MIT License**.
+
+## Contributors
+👨‍💻 **Levy Wanyonyi** – [GitHub](https://github.com/levywanke)  
+
+
